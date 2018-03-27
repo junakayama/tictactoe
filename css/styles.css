@@ -1,0 +1,23 @@
+  
+/* UNIVERSAL STYLES */
+.center {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* BOARD STYLES */
+ #board-outer {
+    height: 350px;
+    width: 350px;
+    background-color:none;
+    overflow: hidden;
+}
+#board {
+    width: 354px;
+    height: 354px;
+    background-color:none;
+    border-spacing:0;
+    margin-left: -2px;
+    margin-top: -2px;
+}
+

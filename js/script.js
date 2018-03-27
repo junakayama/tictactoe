@@ -1,10 +1,10 @@
-var boardStatus = [0,1,2,3,4,5,6,7,8]; 
+var board = [0,1,2,3,4,5,6,7,8]; 
 var round = 0;
 var currentPlayer;
 
 function setPosition(position,player){
-    if(player == currentPlayer && boardStatus[position] == position){
-        boardStatus[position] = currentPlayer
+    if(player == currentPlayer && board[position] == position){
+        board[position] = currentPlayer
         checkWinner(boardStatus)
     }
 }
@@ -41,7 +41,7 @@ function minmax(){
 }
 
 function reset(){
-    boardStatus = [0,1,2,3,4,5,6,7,8]; 
+    board = [0,1,2,3,4,5,6,7,8]; 
     round = 0;
     currentPlayer = null;
 }

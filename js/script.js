@@ -1,4 +1,4 @@
-var boardStatus = [0,1,2,3,4,5,6,7,8]; 
+var board = [0,1,2,3,4,5,6,7,8]; 
 var round = 0;
 var currentPlayer;
 var iaPLayer = "IA"
@@ -66,7 +66,7 @@ function emptyCells(board){
 }
 
 function reset(){
-    boardStatus = [0,1,2,3,4,5,6,7,8]; 
+    board = [0,1,2,3,4,5,6,7,8]; 
     round = 0;
     currentPlayer = null;
 }

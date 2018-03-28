@@ -1,5 +1,9 @@
 var board = [0,1,2,3,4,5,6,7,8]; 
 var round = 0;
+var computer = "x"
+var human = "o"
+var round = 0;
+var iter = 0;
 var currentPlayer;
 
 function setPosition(position,player){

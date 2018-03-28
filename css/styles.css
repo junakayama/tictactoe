@@ -1,23 +1,39 @@
-  
+ td {
+    border: 2px solid #333;
+    height: 100px;
+    width: 100px;
+    text-align:  center;
+    vertical-align: middle;
+    font-size: 70px;
+    cursor: pointer;
+ } 
+
+ table {
+    border-collapse: collapse;
+    position: absolute;
+    left: 50%;
+    margin-left: -155px;
+    top: 50px;
+ }
 /* UNIVERSAL STYLES */
-.center {
+/*.center {
     margin-right: auto;
     margin-left: auto;
 }
 
 /* BOARD STYLES */
- #board-outer {
+/* #board-outer {
     height: 350px;
     width: 350px;
     background-color:none;
-    overflow: hidden;
+    overflow: hidden;*/
 }
-#board {
+/*#board {
     width: 354px;
     height: 354px;
     background-color:none;
     border-spacing:0;
     margin-left: -2px;
     margin-top: -2px;
-}
+}*/*/
 

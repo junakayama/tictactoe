@@ -1,43 +1,68 @@
 var board = [0,1,2,3,4,5,6,7,8]; 
 var round = 0;
 var currentPlayer;
+var iaPLayer = "IA"
+var humanPlayer = "Human"
+
+var cell = document.getElementsByClassName("cell")
+for (let index = 0; index < cell.length; index++) {
+    cell[index].addEventListener("click",test,false);
+}
+
+function test(){
+    console.log("click");
+}
 
 function setPosition(position,player){
     if(player == currentPlayer && board[position] == position){
-        board[position] = currentPlayer
-        checkWinner(boardStatus)
+        board[position] = currentPlayer;
+        checkWinner(board,currentPlayer);
     }
 }
 
-function checkWinner(boardStatus){
-    if ((board[0] == currentPlayer && board[1] == currentPlayer && board[2] == currentPlayer) ||
-        (board[3] == currentPlayer && board[4] == currentPlayer && board[5] == currentPlayer) ||
-        (board[6] == currentPlayer && board[7] == currentPlayer && board[8] == currentPlayer) ||
-        (board[0] == currentPlayer && board[3] == currentPlayer && board[6] == currentPlayer) ||
-        (board[1] == currentPlayer && board[4] == currentPlayer && board[7] == currentPlayer) ||
-        (board[2] == currentPlayer && board[5] == currentPlayer && board[8] == currentPlayer) ||
-        (board[0] == currentPlayer && board[4] == currentPlayer && board[8] == currentPlayer) ||
-        (board[2] == currentPlayer && board[4] == currentPlayer && board[6] == currentPlayer)){
+function checkWinner(board,player){
+    if ((board[0] == player && board[1] == player && board[2] == player) ||
+        (board[3] == player && board[4] == player && board[5] == player) ||
+        (board[6] == player && board[7] == player && board[8] == player) ||
+        (board[0] == player && board[3] == player && board[6] == player) ||
+        (board[1] == player && board[4] == player && board[7] == player) ||
+        (board[2] == player && board[5] == player && board[8] == player) ||
+        (board[0] == player && board[4] == player && board[8] == player) ||
+        (board[2] == player && board[4] == player && board[6] == player)){
         //win
-        reset()
-    }else if(round>8){
-        //empate
-        reset()
+        return true;
     }else{
-        nextPlayer()    
+        //lose
+        return false;
     }
 }
 
 function nextPlayer(){
-    if(currentPlayer == "player"){
-        currentPlayer = "pc"
+    if(currentPlayer == humanPlayer){
+        currentPlayer = iaPLayer;
     }else{
-        currentPlayer = "player"
+        currentPlayer = humanPlayer;
     }
 }
 
-function minmax(){
+function minmax(board){
+
+    var move = {};
+
     //insira logica aqui ;)
+    if(checkWinner(board,iaPLayer)){
+     //VALUE +1   
+    }
+    if(checkWinner(board,humanPlayer)){
+    //VALUE -1   
+    }
+    if(!checkWinner(board,iaPLayer)&&!checkWinner(board,humanPlayer)){
+    // value 0
+    }
+}
+
+function emptyCells(board){
+    return board.filter(cell => cell != humanPlayer && cell != iaPLayer);
 }
 
 function reset(){

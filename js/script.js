@@ -14,13 +14,13 @@ function test(){
 }
 
 function setPosition(position,player){
-    if(player == currentPlayer && boardStatus[position] == position){
-        boardStatus[position] = currentPlayer;
-        checkWinner(boardStatus,currentPlayer);
+    if(player == currentPlayer && board[position] == position){
+        board[position] = currentPlayer;
+        checkWinner(board,currentPlayer);
     }
 }
 
-function checkWinner(boardStatus,player){
+function checkWinner(board,player){
     if ((board[0] == player && board[1] == player && board[2] == player) ||
         (board[3] == player && board[4] == player && board[5] == player) ||
         (board[6] == player && board[7] == player && board[8] == player) ||

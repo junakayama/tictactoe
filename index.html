@@ -3,33 +3,31 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
         <title>Projeto Sistemas Inteligentes</title>
 
     </head>
     <body>
-
-        <h1>Tic Tac Toe</h1>
-
-        <div id="board-outer" class="center">
-            <table id="board">
-                <tr class="row">
-                    <td class="cell" id="0">x</td>   
-                    <td class="cell" id="1">x</td>   
-                    <td class="cell" id="2">x</td>   
-                </tr>
-                <tr class="row">
-                    <td class="cell" id="3">o</td>   
-                    <td class="cell" id="4">o</td>   
-                    <td class="cell" id="5">o</td>   
-                </tr>
-                <tr class="row">
-                    <td class="cell" id="6">x</td>   
-                    <td class="cell" id="7">x</td>   
-                    <td class="cell" id="8">x</td>   
-                </tr>
-            </table>
-        </div>
+        <table id="board">
+            <tr class="row">
+                <td class="cell" id="0"></td>   
+                <td class="cell" id="1"></td>   
+                <td class="cell" id="2"></td>   
+            </tr>
+            <tr class="row">
+                <td class="cell" id="3"></td>   
+                <td class="cell" id="4"></td>   
+                <td class="cell" id="5"></td>   
+            </tr>
+            <tr class="row">
+                <td class="cell" id="6"></td>   
+                <td class="cell" id="7"></td>   
+                <td class="cell" id="8"></td>   
+             </tr>
+        </table>
+        <div class="endgame"></div>
+        <button onClick="startGame()">Replay</button>
         <script type="text/javascript" src="js/script.js"></script>
     </body>
 </html>

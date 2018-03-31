@@ -6,13 +6,22 @@ var currentPlayer;
 var computer = "x"
 var humanP = "o"
 
-var cell = document.getElementsByClassName("cell")
-for (let index = 0; index < cell.length; index++) {
-    cell[index].addEventListener("click",test,false);
+
+
+const cells = document.querySelectorAll('.cell');
+startGame();
+
+function startGame () {
+    origBoard = Array.from(Array(9).keys());
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].innerText = '';
+        cells[i].style.removeProperty('background-color');
+        cells[i].addEventListener('click', turnClick, false);
+    };
 }
 
-function test(){
-    console.log("click");
+function turnClick(square) {
+    console.log(square.target.id);
 }
 
 function setPosition(position,player){

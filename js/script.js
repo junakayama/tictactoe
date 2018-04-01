@@ -20,7 +20,7 @@ function startGame() {
 function turnClick(cell) {
     turn(cell.target.id,currentPlayer)
     console.log(board)
-    if(!checkTie()) turn(minimax(board, currentPlayer), currentPlayer)
+    if(!checkTie()) turn(minimax(board, currentPlayer).index, currentPlayer)
 }
 
 function turn(position,player){
@@ -71,7 +71,7 @@ function minimax(newBoard, player) {
 
     var bestMove = getBestMove (moves, player);
 
-    return moves[bestMove].index;
+    return moves[bestMove];
 }
 
 function possibleMoves(newBoard, availableCells, player) {
@@ -130,7 +130,7 @@ function reset(){
 }
 
 function checkTie() {
-    if (emptyCells().length == 0) {
+    if (emptyCells(board).length == 0) {
         for (var i = 0; i < cells.length; i++) {
             cells[i].removeEventListener('click', turnClick, false);
         }

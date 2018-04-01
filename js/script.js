@@ -7,25 +7,27 @@ var currentPlayer = humanP;
 
 
 const cells = document.querySelectorAll('.cell');
+const replay = document.getElementById('replay');
 startGame();
 
-function startGame () {
-    for (let index = 0; index < cells.length; index++) {
-    cells[index].addEventListener("click",function(){
-        event.preventDefault();
-        setPosition(cells[index].id,currentPlayer)
-        console.log(board)
-    },false);
-}
+function startGame() {
+    reset();
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].innerText = '';
+        cells[i].addEventListener("click",turnClick,false);
+    }
+    replay.addEventListener("click",startGame,false);
 }
 
+function turnClick(cell) {
+    setPosition(cell.target.id,currentPlayer)
+    console.log(board)
+}
 
 function setPosition(position,player){
-    if(player == currentPlayer && board[position] == position){
-        board[position] = player;
-        cells[position].innerHTML = player
-        nextPlayer();
-    }
+    board[position] = player;
+    cells[position].innerHTML = player
+    nextPlayer();
 }
 
 function checkWinner(board,player){
@@ -46,8 +48,10 @@ function checkWinner(board,player){
 
 function nextPlayer(){
     if(currentPlayer == humanP){
+        console.log("computer turn");
         currentPlayer = computer;
     }else{
+        console.log("human turn");
         currentPlayer = humanP;
     }
 }
@@ -122,5 +126,5 @@ function emptyCells(board){
 function reset(){
     board = [0,1,2,3,4,5,6,7,8]; 
     round = 0;
-    currentPlayer = null;
+    currentPlayer = humanP;
 }

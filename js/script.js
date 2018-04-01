@@ -20,14 +20,19 @@ function startGame() {
 }
 
 function turnClick(cell) {
-    setPosition(cell.target.id,currentPlayer)
+    turn(cell.target.id,currentPlayer)
     console.log(board)
+    if(!checkTie()) turn(bestSpot(), currentPlayer)
 }
 
-function setPosition(position,player){
-    board[position] = player;
-    cells[position].innerHTML = player
-    nextPlayer();
+function turn(position,player){
+    if(player==currentPlayer && board[position]==position){
+        board[position] = player;
+        cells[position].innerHTML = player
+        checkWinner(board, player);
+        round++;
+        nextPlayer();
+    }
 }
 
 function checkWinner(board,player){
@@ -38,11 +43,8 @@ function checkWinner(board,player){
         (board[1] == player && board[4] == player && board[7] == player) ||
         (board[2] == player && board[5] == player && board[8] == player) ||
         (board[0] == player && board[4] == player && board[8] == player) ||
-        (board[2] == player && board[4] == player && board[6] == player)){
-        //win
-        return true;
-    }else{
-        return false;
+        (board[2] == player && board[4] == player && board[6] == player)) {
+        gameOver();
     }
 }
 
@@ -59,7 +61,7 @@ function nextPlayer(){
 function minmax(board,player){
     iter++;
 
-    var availableCells = emptyCells(board);
+    var availableCells = emptyCells();
 
     if(checkWinner(board,computer)){
         return 1;   
@@ -74,7 +76,6 @@ function minmax(board,player){
     moves = possibleMoves(board,availableCells,player);
 
 }
-
 
 function possibleMoves(newBoard,availableCells,player){
     var moves = []
@@ -119,12 +120,38 @@ function searchBestMove(moves,player){
     return bestMove;
 }
 
-function emptyCells(board){
+function emptyCells(){
     return board.filter(cell => cell != humanP && cell != computer);
+}
+
+function bestSpot() {
+    return emptyCells()[0];
 }
 
 function reset(){
     board = [0,1,2,3,4,5,6,7,8]; 
     round = 0;
     currentPlayer = humanP;
+}
+
+function checkTie() {
+    if (emptyCells().length == 0) {
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].removeEventListener('click', turnClick, false);
+        }
+        declareWinner("Tie game!")
+        return true;
+    } 
+    return false;
+}
+
+function declareWinner(who) {
+    console.log(who);
+}
+
+function gameOver(tie) {
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].removeEventListener('click', turnClick, false);
+    }
+    declareWinner(currentPlayer == humanP ? "You win!" : "You lose.")
 }

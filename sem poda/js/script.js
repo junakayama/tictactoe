@@ -2,6 +2,7 @@ var board = [0,1,2,3,4,5,6,7,8];
 var computer = "x"
 var human = "o"
 var currentPlayer = human;
+var iter = 0;
 
 
 const cells = document.querySelectorAll('.cell');
@@ -18,9 +19,10 @@ function startGame() {
 }
 
 function turnClick(cell) {
-    var validMove = turn(cell.target.id,currentPlayer)
-    if(!checkTie() && validMove) turn(minimax(board, currentPlayer).index, currentPlayer)
-    console.log(board)
+    var validMove = turn(cell.target.id,currentPlayer);
+    if(!checkTie() && validMove) turn(minimax(board, currentPlayer).index, currentPlayer);
+    console.log(board);
+    console.log("número de iterações:"+iter);
 }
 
 function turn(position,player){
@@ -62,6 +64,7 @@ function nextPlayer(){
 }
 
 function minimax(newBoard, player) {
+    iter++;
     var availableCells = emptyCells(newBoard);
 
     if (checkWinner(newBoard, human)) {
@@ -132,6 +135,7 @@ function emptyCells(board){
 function reset(){
     board = [0,1,2,3,4,5,6,7,8]; 
     currentPlayer = human;
+    iter = 0;
 }
 
 function checkTie() {

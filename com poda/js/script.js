@@ -2,6 +2,7 @@ var board = [0,1,2,3,4,5,6,7,8];
 var computer = "x"
 var human = "o"
 var currentPlayer = human;
+var iter = 0;
 
 
 const cells = document.querySelectorAll('.cell');
@@ -18,9 +19,10 @@ function startGame() {
 }
 
 function turnClick(cell) {
-    turn(cell.target.id,currentPlayer)
-    console.log(board)
-    if(!checkTie()) turn(alphaBetaPruning(board, currentPlayer, -Infinity, +Infinity).index, currentPlayer)
+    var validMove = turn(cell.target.id,currentPlayer);
+    if(!checkTie() && validMove) turn(alphaBetaPruning(board, currentPlayer, -Infinity, +Infinity).index, currentPlayer);
+    console.log(board);
+    console.log("número de iterações:"+iter);
 }
 
 function turn(position,player){
@@ -32,7 +34,9 @@ function turn(position,player){
         } else {
             nextPlayer();
         }
+        return true;
     }
+    return false;
 }
 
 function checkWinner(board,player){
@@ -60,6 +64,7 @@ function nextPlayer(){
 }
 
 function alphaBetaPruning(newBoard, player, alpha, beta) {
+    iter++;
     var availableCells = emptyCells(newBoard);
 
     if (checkWinner(newBoard, human)) {
@@ -72,9 +77,30 @@ function alphaBetaPruning(newBoard, player, alpha, beta) {
 
     var moves = possibleMoves(newBoard, availableCells, player, alpha, beta);
 
-    var bestMove = getBestMove (moves, player, alpha, beta);
+    var bestMove = getBestMove(moves, player, alpha, beta);
 
     return moves[bestMove];
+}
+
+function getBestMove(moves, player, alpha, beta) {
+    var bestMove;
+    if (player == computer) {
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score > alpha) {
+                alpha = moves[i].score;
+                bestMove = i;
+            }
+        }
+    } else {
+        var bestScore = 10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score < beta) {
+                beta = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+    return bestMove;
 }
 
 function possibleMoves(newBoard, availableCells, player, alpha, beta) {
@@ -103,34 +129,12 @@ function possibleMoves(newBoard, availableCells, player, alpha, beta) {
     return moves;
 }
 
-
-function getBestMove(moves, player, alpha, beta) {
-    var bestMove;
-    if (player == computer) {
-        for (var i = 0; i < moves.length; i++) {
-            if (moves[i].score > alpha) {
-                alpha = moves[i].score;
-                bestMove = i;
-            }
-        }
-    } else {
-        var bestScore = 10000;
-        for (var i = 0; i < moves.length; i++) {
-            if (moves[i].score < beta) {
-                beta = moves[i].score;
-                bestMove = i;
-            }
-        }
-    }
-
-    return bestMove;
-}
-
 function emptyCells(board){
     return board.filter(cell => cell != human && cell != computer);
 }
 
 function reset(){
+    iter = 0;
     board = [0,1,2,3,4,5,6,7,8]; 
     currentPlayer = human;
 }

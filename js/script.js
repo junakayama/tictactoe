@@ -18,9 +18,9 @@ function startGame() {
 }
 
 function turnClick(cell) {
-    turn(cell.target.id,currentPlayer)
+    var validMove = turn(cell.target.id,currentPlayer)
+    if(!checkTie() && validMove) turn(minimax(board, currentPlayer).index, currentPlayer)
     console.log(board)
-    if(!checkTie()) turn(minimax(board, currentPlayer).index, currentPlayer)
 }
 
 function turn(position,player){
@@ -32,7 +32,9 @@ function turn(position,player){
         } else {
             nextPlayer();
         }
+        return true;
     }
+    return false;
 }
 
 function checkWinner(board,player){

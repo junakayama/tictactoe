@@ -27,8 +27,11 @@ function turn(position,player){
     if(player==currentPlayer && board[position]==position){
         board[position] = player;
         cells[position].innerHTML = player
-        if (checkWinner(board, player)) gameOver();
-        nextPlayer();
+        if (checkWinner(board, player)){
+            gameOver();
+        } else {
+            nextPlayer();
+        }
     }
 }
 

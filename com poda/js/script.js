@@ -154,9 +154,38 @@ function declareWinner(who) {
     console.log(who);
 }
 
+function declareWinner(who) {
+    console.log(who);
+    openModal();
+}
+
 function gameOver(tie) {
     for (var i = 0; i < cells.length; i++) {
         cells[i].removeEventListener('click', turnClick, false);
     }
     declareWinner(currentPlayer == human ? "You win!" : "You lose.")
+}
+
+var modal = document.getElementById('myModal');
+var textModal = document.getElementById('textModal');
+var span = document.getElementsByClassName("close")[0];
+
+function declareWinner(who) {
+    console.log(who);
+    textModal.innerText = who;
+    openModal();
+}
+
+function openModal() {
+    modal.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }

@@ -68,11 +68,11 @@ function alphaBetaPruning(newBoard, player, alpha, beta) {
     var availableCells = emptyCells(newBoard);
 
     if (checkWinner(newBoard, human)) {
-        return {score:-1};
+        return {score:-1, alpha:-1, beta:-1};
     } else if (checkWinner(newBoard, computer)) {
         return {score:1, alpha:1, beta:1};
     } else if (availableCells.length === 0) {
-        return {score: 0};
+        return {score: 0, alpha:0, beta:0};
     }
 
     var moves = [];
@@ -84,37 +84,41 @@ function alphaBetaPruning(newBoard, player, alpha, beta) {
         if (player == computer) {
             var result = alphaBetaPruning(newBoard, human, alpha, beta);
             move.score = result.score;
+            if(move.score > alpha) {
+                alpha = move.score;
+            }
+            if (alpha >= beta) break;
         } else {
             var result = alphaBetaPruning(newBoard, computer, alpha, beta);
             move.score = result.score;
+            if(move.score > beta) {
+                beta = move.score;
+            }
+            if (alpha >= beta) break;
         }
 
         newBoard[availableCells[i]] = move.index;
         moves.push(move);
-        if(alpha >= beta) {
-            console.log("entrou no break");
-            break;
-        }
     }
 
     var bestMove;
     if (player == computer) {
+        var bestScore = -10000;
         for (var i = 0; i < moves.length; i++) {
-            if (moves[i].score > alpha) {
-                alpha = moves[i].score;
+            if(moves[i].score > bestScore) {
+                bestScore = moves[i].score;
                 bestMove = i;
             }
         }
     } else {
         var bestScore = 10000;
         for (var i = 0; i < moves.length; i++) {
-            if (moves[i].score < beta) {
-                beta = moves[i].score;
+            if(moves[i].score < bestScore) {
+                bestScore = moves[i].score;
                 bestMove = i;
             }
         }
     }
-
     return moves[bestMove];
 }
 

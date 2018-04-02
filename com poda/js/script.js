@@ -70,19 +70,33 @@ function alphaBetaPruning(newBoard, player, alpha, beta) {
     if (checkWinner(newBoard, human)) {
         return {score:-1};
     } else if (checkWinner(newBoard, computer)) {
-        return {score:1};
+        return {score:1, alpha:1, beta:1};
     } else if (availableCells.length === 0) {
         return {score: 0};
     }
 
-    var moves = possibleMoves(newBoard, availableCells, player, alpha, beta);
+    var moves = [];
+    for (var i = 0; i < availableCells.length; i++) {
+        var move = {}
+        move.index = newBoard[availableCells[i]];
+        newBoard[availableCells[i]] = player;
 
-    var bestMove = getBestMove(moves, player, alpha, beta);
+        if (player == computer) {
+            var result = alphaBetaPruning(newBoard, human, alpha, beta);
+            move.score = result.score;
+        } else {
+            var result = alphaBetaPruning(newBoard, computer, alpha, beta);
+            move.score = result.score;
+        }
 
-    return moves[bestMove];
-}
+        newBoard[availableCells[i]] = move.index;
+        moves.push(move);
+        if(alpha >= beta) {
+            console.log("entrou no break");
+            break;
+        }
+    }
 
-function getBestMove(moves, player, alpha, beta) {
     var bestMove;
     if (player == computer) {
         for (var i = 0; i < moves.length; i++) {
@@ -100,33 +114,8 @@ function getBestMove(moves, player, alpha, beta) {
             }
         }
     }
-    return bestMove;
-}
 
-function possibleMoves(newBoard, availableCells, player, alpha, beta) {
-    var moves = [];
-    for (var i = 0; i < availableCells.length; i++) {
-        var move = {}
-        move.index = newBoard[availableCells[i]];
-        newBoard[availableCells[i]] = player;
-
-        if (player == computer) {
-            var result = alphaBetaPruning(newBoard, player, alpha, beta);
-            move.score = result.score;
-        } else {
-            var result = alphaBetaPruning(newBoard, player, alpha, beta);
-            move.score = result.score;
-        }
-
-        newBoard[availableCells[i]] = move.index;
-        moves.push(move);
-        //
-        if(alpha >= beta) {
-            break;
-        }
-    }
-
-    return moves;
+    return moves[bestMove];
 }
 
 function emptyCells(board){
